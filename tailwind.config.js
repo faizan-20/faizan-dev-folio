@@ -9,6 +9,11 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+        rubik: ["Rubik", "sans-serif"],
+      },
       colors: {
         // custom color theme for the website
         rosepine: {
