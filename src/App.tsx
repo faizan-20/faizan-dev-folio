@@ -1,7 +1,11 @@
+import Home from "./pages/HomePage";
+
 function App() {
   return (
     <>
-      <div className="text-4xl">Hello</div>
+      <div className="bg-rosepine-base h-screen">
+        <Home />
+      </div>
     </>
   );
 }
