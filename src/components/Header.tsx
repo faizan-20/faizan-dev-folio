@@ -1,7 +1,7 @@
 function Header() {
   return (
     <>
-      <div className="flex justify-around items-center bg-rosepine-surface border-b-[1px] text-rosepine-text/90 border-b-rosepine-overlay py-2 ">
+      <div className="flex justify-around items-center bg-rosepine-base border-b-[1px] text-rosepine-text/90 border-b-rosepine-overlay py-2 ">
         <div className="font-bold text-xl">
           Why Is <span>Faizan</span>
         </div>

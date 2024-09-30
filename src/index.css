@@ -64,6 +64,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-rosepine-text font-montserrat;
+    @apply bg-rosepine-base text-rosepine-text font-montserrat;
   }
 }

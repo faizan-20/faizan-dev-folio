@@ -3,7 +3,7 @@ import Home from "./pages/HomePage";
 function App() {
   return (
     <>
-      <div className="bg-rosepine-surface h-full">
+      <div className="">
         <Home />
       </div>
     </>

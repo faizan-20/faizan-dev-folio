@@ -4,13 +4,18 @@ function Hero() {
   // State to trigger the page load animation
   const [loaded, setLoaded] = useState(false);
 
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    section?.scrollIntoView({ behavior: "smooth" });
+  };
+
   useEffect(() => {
     setLoaded(true); // Trigger animation when the component is mounted
   }, []);
 
   return (
     <div
-      className={`h-screen flex flex-col justify-center items-center transition-opacity duration-1000 ${
+      className={`h-[92vh] flex flex-col justify-center items-center transition-opacity duration-1000 ${
         loaded ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -22,18 +27,23 @@ function Hero() {
         <div>
           Hello, I Am <span className="text-rosepine-pine">Faizan Ahmad</span>.
         </div>
-        <div className="text-rosepine-subtle text-3xl">
+        <div className="text-rosepine-subtle text-3xl font-normal">
           Full Stack Web Developer
         </div>
       </div>
 
       <div className="flex gap-80 text-xl font-bold text-rosepine-iris/30 mt-44">
-        {["Who Is Me", "What I Do", "Why Me"].map((text, index) => (
+        {[
+          { key: "Who Is Me", value: "who-is-me" },
+          { key: "What I Do", value: "what-i-do" },
+          { key: "Why Me", value: "why-me" },
+        ].map((item, index) => (
           <div
             key={index}
             className="relative group cursor-pointer transition-transform duration-300 hover:translate-y-2 hover:text-rosepine-iris/80 p-4"
+            onClick={() => scrollToSection(item.value)}
           >
-            {text}
+            {item.key}
             {/* Down arrow appears on hover */}
             <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <svg
