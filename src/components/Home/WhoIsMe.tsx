@@ -115,7 +115,7 @@ const techStack: TechStack[] = [
     icon: PrismaIcon,
     category: "ORM",
     description: "Next-generation ORM for Node.js and TypeScript",
-  },
+  }
 ];
 
 function WhoIsMe() {

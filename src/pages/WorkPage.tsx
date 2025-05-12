@@ -73,19 +73,19 @@ const projects: Project[] = [
 const skills: Skill[] = [
   {
     category: "Frontend",
-    items: ["JavaScript", "TypeScript", "React.js", "Vue.js", "Nuxt.js", "TailwindCSS", "HTML", "CSS", "SCSS"]
+    items: ["React.js", "TypeScript", "JavaScript", "HTML", "CSS", "TailwindCSS", "Vue.js", "Nuxt.js"]
   },
   {
     category: "Backend",
-    items: ["Node.js", "Express.js", "MongoDB", "PostgreSQL", "Prisma"]
+    items: ["Node.js", "Express.js", "MongoDB", "PostgreSQL", "Prisma", "Django", "Python"]
   },
   {
     category: "DevOps & Tools",
-    items: ["Git/GitHub", "Unix/Linux", "Docker", "AWS"]
+    items: ["Git/GitHub", "Docker", "AWS", "Linux", "Vercel", "Netlify"]
   },
   {
     category: "Security & Authentication",
-    items: ["Passport.js", "JWT"]
+    items: ["JWT", "Passport.js", "OAuth", "Firebase Auth"]
   }
 ];
 

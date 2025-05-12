@@ -21,18 +21,22 @@ function Header() {
   const menuVariants = {
     closed: {
       opacity: 0,
-      y: -20,
+      y: -10,
       transition: {
-        duration: 0.2,
-        ease: "easeInOut"
+        type: "spring",
+        stiffness: 500,
+        damping: 30,
+        duration: 0.15
       }
     },
     open: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.3,
-        ease: "easeOut"
+        type: "spring",
+        stiffness: 500,
+        damping: 30,
+        duration: 0.15
       }
     }
   };
@@ -40,18 +44,23 @@ function Header() {
   const linkVariants = {
     closed: {
       opacity: 0,
-      x: -20,
+      x: -10,
       transition: {
-        duration: 0.2
+        type: "spring",
+        stiffness: 500,
+        damping: 30,
+        duration: 0.15
       }
     },
     open: (index: number) => ({
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.3,
-        delay: index * 0.1,
-        ease: "easeOut"
+        type: "spring",
+        stiffness: 500,
+        damping: 30,
+        duration: 0.15,
+        delay: index * 0.05
       }
     })
   };
@@ -84,35 +93,98 @@ function Header() {
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <ThemeToggle />
-            <button
+            <motion.button
               onClick={toggleMobileMenu}
               className="ml-3 p-2 rounded-md text-rosepine-text/90 hover:text-rosepine-pine hover:bg-rosepine-highlight-med focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rosepine-pine"
               aria-expanded={isMobileMenuOpen}
               aria-label="Toggle navigation menu"
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{
+                type: "spring",
+                stiffness: 500,
+                damping: 30
+              }}
             >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+              <AnimatePresence mode="wait">
+                {isMobileMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -45, opacity: 0, scale: 0.8 }}
+                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotate: 45, opacity: 0, scale: 0.8 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 30,
+                      duration: 0.15
+                    }}
+                  >
+                    <X className="h-6 w-6" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 45, opacity: 0, scale: 0.8 }}
+                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotate: -45, opacity: 0, scale: 0.8 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 30,
+                      duration: 0.15
+                    }}
+                  >
+                    <Menu className="h-6 w-6" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
           </div>
         </div>
       </div>
 
       {/* Mobile Navigation Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-rosepine-surface shadow-lg border-t border-rosepine-overlay">
-          <nav className="flex flex-col px-4 py-3 space-y-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="block px-3 py-2 rounded-md text-base font-medium text-rosepine-text/90 hover:text-rosepine-pine hover:bg-rosepine-highlight-low transition-colors"
-                onClick={toggleMobileMenu}
-              >
-                {link.text}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      )}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            className="md:hidden absolute top-full left-0 right-0 bg-rosepine-surface shadow-lg border-t border-rosepine-overlay"
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={menuVariants}
+          >
+            <nav className="flex flex-col px-4 py-3 space-y-1">
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.to}
+                  custom={index}
+                  variants={linkVariants}
+                  initial="closed"
+                  animate="open"
+                  exit="closed"
+                  whileHover={{ 
+                    x: 5,
+                    transition: {
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 30
+                    }
+                  }}
+                >
+                  <Link
+                    to={link.to}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-rosepine-text/90 hover:text-rosepine-pine hover:bg-rosepine-highlight-low transition-colors"
+                    onClick={toggleMobileMenu}
+                  >
+                    {link.text}
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
