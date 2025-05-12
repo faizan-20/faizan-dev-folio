@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Link } from "react-router-dom";
 
 interface Strength {
   title: string;
@@ -46,27 +47,39 @@ const strengths: Strength[] = [
   }
 ];
 
-const testimonials = [
-  {
-    quote: "Faizan consistently delivers high-quality code and innovative solutions.",
-    author: "Previous Client",
-    role: "Project Manager"
-  },
-  {
-    quote: "A reliable developer who goes above and beyond to ensure project success.",
-    author: "Team Lead",
-    role: "Tech Lead"
-  }
-];
-
 function WhyMe() {
+  const cardVariants = {
+    hidden: { 
+      opacity: 0,
+      y: 20,
+      scale: 0.95
+    },
+    visible: (index: number) => ({
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.4,
+        delay: index * 0.1,
+        ease: [0.4, 0, 0.2, 1]
+      }
+    }),
+    hover: {
+      scale: 1.02,
+      transition: {
+        duration: 0.2,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen py-20 px-4 md:px-8 lg:px-16" id="why-me">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
@@ -84,16 +97,22 @@ function WhyMe() {
           {strengths.map((strength, index) => (
             <motion.div
               key={strength.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
+              custom={index}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              whileHover="hover"
+              viewport={{ once: true, margin: "-50px" }}
               className="p-6 rounded-lg bg-rosepine-surface border border-rosepine-overlay hover:border-rosepine-pine transition-all duration-300"
             >
               <div className="flex items-start gap-4">
-                <div className="p-2 rounded-lg bg-rosepine-pine/10 text-rosepine-pine">
+                <motion.div 
+                  className="p-2 rounded-lg bg-rosepine-pine/10 text-rosepine-pine"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.2 }}
+                >
                   {strength.icon}
-                </div>
+                </motion.div>
                 <div>
                   <h3 className="text-xl font-semibold text-rosepine-text mb-2">
                     {strength.title}
@@ -107,40 +126,11 @@ function WhyMe() {
           ))}
         </div>
 
-        {/* Testimonials */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
-        >
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="p-6 rounded-lg bg-rosepine-surface/50 border border-rosepine-overlay"
-            >
-              <svg
-                className="w-8 h-8 text-rosepine-pine/20 mb-4"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-              <p className="text-rosepine-text/80 mb-4">{testimonial.quote}</p>
-              <div>
-                <p className="font-semibold text-rosepine-text">{testimonial.author}</p>
-                <p className="text-sm text-rosepine-text/60">{testimonial.role}</p>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
         {/* Call to Action */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
           viewport={{ once: true }}
           className="text-center mt-20"
         >
@@ -150,8 +140,8 @@ function WhyMe() {
           <p className="text-rosepine-text/60 mb-8">
             Let's work together to bring your ideas to life
           </p>
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="inline-flex items-center px-6 py-3 rounded-lg bg-rosepine-pine text-white hover:bg-rosepine-pine/90 transition-colors"
           >
             Get in Touch
@@ -168,7 +158,7 @@ function WhyMe() {
                 d="M14 5l7 7m0 0l-7 7m7-7H3"
               />
             </svg>
-          </a>
+          </Link>
         </motion.div>
       </div>
     </div>

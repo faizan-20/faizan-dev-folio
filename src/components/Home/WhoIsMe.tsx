@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { motion } from "framer-motion";
 import VueJsIcon from "../../assets/svgs/vuejs.svg";
 import NuxtJsIcon from "../../assets/svgs/nuxtjs.svg";
 import NextJsIcon from "../../assets/svgs/nextjs.svg";
@@ -124,16 +125,79 @@ function WhoIsMe() {
     setLoadedImages((prev) => ({ ...prev, [name]: true }));
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  };
+
+  const techStackVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const techItemVariants = {
+    hidden: { 
+      opacity: 0,
+      scale: 0.8,
+      y: 20
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 200,
+        damping: 15,
+        duration: 0.3,
+      },
+    },
+  };
+
   return (
     <div className="min-h-screen py-20 px-4 md:px-8 lg:px-16" id="who-is-me">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Text Content */}
-          <div className="space-y-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-rosepine-pine mb-6">
+          <motion.div
+            className="space-y-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={containerVariants}
+          >
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-rosepine-pine mb-6"
+              variants={itemVariants}
+            >
               Who Is Me?
-            </h2>
-            <div className="space-y-6 text-lg md:text-xl text-rosepine-text/90">
+            </motion.h2>
+            <motion.div 
+              className="space-y-6 text-lg md:text-xl text-rosepine-text/90"
+              variants={itemVariants}
+            >
               <p className="leading-relaxed">
                 I'm Faizan Ahmad, a passionate Full Stack Developer with a strong
                 foundation in both frontend and backend development. My journey in web
@@ -146,14 +210,19 @@ function WhoIsMe() {
                 efficient, scalable, and user-centric web solutions that blend
                 functionality with elegance.
               </p>
-            </div>
+            </motion.div>
 
             {/* Personal Traits */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+            <motion.div 
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8"
+              variants={containerVariants}
+            >
               {traits.map((trait) => (
-                <div
+                <motion.div
                   key={trait.title}
                   className="p-4 rounded-lg bg-rosepine-surface border border-rosepine-overlay hover:border-rosepine-pine transition-colors"
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.02 }}
                 >
                   <div className="text-2xl mb-2">{trait.icon}</div>
                   <h3 className="text-lg font-semibold text-rosepine-text mb-1">
@@ -162,41 +231,83 @@ function WhoIsMe() {
                   <p className="text-sm text-rosepine-text/60">
                     {trait.description}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Tech Stack Grid */}
-          <div className="space-y-8">
-            <h3 className="text-2xl font-bold text-rosepine-pine mb-6">Tech Stack</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+          <motion.div
+            className="space-y-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={techStackVariants}
+          >
+            <motion.h3 
+              className="text-2xl font-bold text-rosepine-pine mb-6"
+              variants={itemVariants}
+            >
+              Tech Stack
+            </motion.h3>
+            <motion.div 
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6"
+              variants={techStackVariants}
+            >
               {techStack.map((tech) => (
                 <TooltipProvider key={tech.name}>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <div
-                        className={`relative group cursor-pointer transition-all duration-300 ${
+                      <motion.div
+                        className={`relative group cursor-pointer ${
                           loadedImages[tech.name]
                             ? "opacity-100"
                             : "opacity-0"
                         }`}
+                        variants={techItemVariants}
+                        whileHover={{ 
+                          scale: 1.05,
+                          transition: {
+                            type: "spring",
+                            stiffness: 500,
+                            damping: 15,
+                            duration: 0.2
+                          }
+                        }}
                       >
-                        <div className="flex flex-col items-center justify-center p-4 rounded-lg bg-rosepine-surface border border-rosepine-overlay hover:border-rosepine-pine transition-colors">
-                          <img
+                        <div className="flex flex-col items-center justify-center p-4 rounded-lg bg-rosepine-surface/80 dark:bg-rosepine-surface border border-rosepine-overlay hover:border-rosepine-pine transition-colors">
+                          <motion.img
                             src={tech.icon}
                             alt={tech.name}
-                            className="w-12 h-12 object-contain mb-2 transition-all duration-300 group-hover:scale-110"
+                            className="w-12 h-12 object-contain mb-2"
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 300,
+                              damping: 15,
+                              delay: 0.05
+                            }}
                             onLoad={() => handleImageLoad(tech.name)}
                           />
-                          <span className="text-sm text-rosepine-text/80 text-center">
+                          <motion.span 
+                            className="text-sm text-rosepine-text/80 text-center"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 }}
+                          >
                             {tech.name}
-                          </span>
-                          <span className="text-xs text-rosepine-text/40 mt-1">
+                          </motion.span>
+                          <motion.span 
+                            className="text-xs text-rosepine-text/40 mt-1"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.15 }}
+                          >
                             {tech.category}
-                          </span>
+                          </motion.span>
                         </div>
-                      </div>
+                      </motion.div>
                     </TooltipTrigger>
                     <TooltipContent className="bg-rosepine-surface/95 backdrop-blur-sm border border-rosepine-overlay">
                       <p className="font-medium text-rosepine-text/80">{tech.name}</p>
@@ -207,8 +318,8 @@ function WhoIsMe() {
                   </Tooltip>
                 </TooltipProvider>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </div>

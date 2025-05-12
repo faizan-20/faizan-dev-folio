@@ -1,9 +1,18 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { motion } from "framer-motion";
 
 interface Achievement {
   title: string;
   value: string;
   description: string;
+  icon: string;
+}
+
+interface Skill {
+  title: string;
+  description: string;
+  icon: string;
+  details: string[];
 }
 
 const achievements: Achievement[] = [
@@ -11,110 +20,204 @@ const achievements: Achievement[] = [
     title: "Users Served",
     value: "50K+",
     description: "Through Health Potli pharmacy portal",
+    icon: "👥"
   },
   {
     title: "Experts Empowered",
     value: "500+",
     description: "On AdviceBazaar consultation platform",
+    icon: "👨‍💻"
   },
   {
     title: "Years Experience",
     value: "3+",
     description: "In full-stack development",
+    icon: "⏳"
   },
 ];
 
+const skills: Skill[] = [
+  {
+    title: "Frontend Development",
+    description: "Building responsive and interactive user interfaces",
+    icon: "🎨",
+    details: [
+      "Vue.js & Nuxt.js",
+      "React & Next.js",
+      "Responsive Design",
+      "UI/UX Implementation"
+    ]
+  },
+  {
+    title: "Backend Development",
+    description: "Creating robust and scalable server-side solutions",
+    icon: "⚙️",
+    details: [
+      "Node.js & Express",
+      "RESTful APIs",
+      "Database Integration",
+      "Authentication & Security"
+    ]
+  },
+  {
+    title: "DevOps & Tools",
+    description: "Streamlining development and deployment processes",
+    icon: "🛠️",
+    details: [
+      "Git & Version Control",
+      "CI/CD Pipelines",
+      "Docker & Deployment",
+      "Performance Optimization"
+    ]
+  }
+];
+
 function WhatIDo() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { 
+      opacity: 0,
+      y: 20,
+      scale: 0.95
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 200,
+        damping: 15,
+        duration: 0.3
+      }
+    },
+    hover: {
+      scale: 1.02,
+      transition: {
+        type: "spring",
+        stiffness: 500,
+        damping: 15,
+        duration: 0.2
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen py-20 px-4 md:px-8 lg:px-16" id="what-i-do">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+        <motion.div
+          className="space-y-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={containerVariants}
+        >
           {/* Main Content */}
-          <div className="space-y-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-rosepine-pine">
+          <motion.div className="space-y-8" variants={containerVariants}>
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-rosepine-pine mb-6"
+              variants={itemVariants}
+            >
               What I Do
-            </h2>
-            <div className="space-y-6 text-lg md:text-xl text-rosepine-text/90">
+            </motion.h2>
+            <motion.div 
+              className="space-y-6 text-lg md:text-xl text-rosepine-text/90"
+              variants={itemVariants}
+            >
               <p className="leading-relaxed">
-                I'm a full-stack developer passionate about building scalable web applications 
-                and impactful digital experiences. With hands-on experience at CodeNicely and 
-                Jio Platforms Limited, I've delivered high-performing frontend and backend 
-                solutions using modern JavaScript frameworks like Vue.js, Nuxt.js, and React.
+                As a Full Stack Developer, I specialize in building modern web
+                applications that are both powerful and user-friendly. My approach
+                combines technical expertise with a keen eye for design and user
+                experience.
               </p>
               <p className="leading-relaxed">
-                My work spans from crafting seamless user interfaces to building secure APIs, 
-                integrating databases, and deploying robust admin systems. I've led development 
-                on live platforms like Health Potli—a pharmacy portal serving over 50,000 users—and 
-                AdviceBazaar, a consultation platform empowering 500+ experts.
+                I work with cutting-edge technologies to create scalable solutions
+                that meet business needs while maintaining high performance and
+                security standards.
               </p>
-              <p className="leading-relaxed">
-                Whether it's streamlining booking flows, implementing notification systems, or 
-                enhancing admin efficiency, I build solutions that are functional, secure, and 
-                user-friendly.
-              </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Achievements Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            variants={containerVariants}
+          >
             {achievements.map((achievement) => (
-              <TooltipProvider key={achievement.title}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="p-6 rounded-lg bg-rosepine-surface border border-rosepine-overlay hover:border-rosepine-pine transition-colors cursor-help">
-                      <div className="text-3xl font-bold text-rosepine-love mb-2">
-                        {achievement.value}
-                      </div>
-                      <div className="text-lg font-semibold text-rosepine-text mb-1">
-                        {achievement.title}
-                      </div>
-                      <div className="text-sm text-rosepine-text/60">
-                        {achievement.description}
-                      </div>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-rosepine-surface/95 backdrop-blur-sm border border-rosepine-overlay">
-                    <p className="text-rosepine-text/80">{achievement.description}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <motion.div
+                key={achievement.title}
+                className="p-6 rounded-lg bg-rosepine-surface border border-rosepine-overlay hover:border-rosepine-pine transition-colors"
+                variants={cardVariants}
+                whileHover="hover"
+              >
+                <div className="text-3xl mb-4">{achievement.icon}</div>
+                <h3 className="text-xl font-semibold text-rosepine-text mb-2">
+                  {achievement.title}
+                </h3>
+                <p className="text-rosepine-text/60">
+                  {achievement.description}
+                </p>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
 
-        {/* Skills Grid */}
-        <div className="mt-20">
-          <h3 className="text-2xl font-bold text-rosepine-pine mb-8">Core Skills</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="p-6 rounded-lg bg-rosepine-surface border border-rosepine-overlay">
-              <h4 className="text-xl font-semibold text-rosepine-text mb-4">Frontend Development</h4>
-              <ul className="space-y-2 text-rosepine-text/80">
-                <li>• Vue.js & Nuxt.js</li>
-                <li>• React & Next.js</li>
-                <li>• Responsive Design</li>
-                <li>• UI/UX Implementation</li>
-              </ul>
-            </div>
-            <div className="p-6 rounded-lg bg-rosepine-surface border border-rosepine-overlay">
-              <h4 className="text-xl font-semibold text-rosepine-text mb-4">Backend Development</h4>
-              <ul className="space-y-2 text-rosepine-text/80">
-                <li>• Node.js & Express</li>
-                <li>• RESTful APIs</li>
-                <li>• Database Integration</li>
-                <li>• Authentication & Security</li>
-              </ul>
-            </div>
-            <div className="p-6 rounded-lg bg-rosepine-surface border border-rosepine-overlay">
-              <h4 className="text-xl font-semibold text-rosepine-text mb-4">DevOps & Tools</h4>
-              <ul className="space-y-2 text-rosepine-text/80">
-                <li>• Git & Version Control</li>
-                <li>• CI/CD Pipelines</li>
-                <li>• Docker & Deployment</li>
-                <li>• Performance Optimization</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+          {/* Skills Grid */}
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+            variants={containerVariants}
+          >
+            {skills.map((skill) => (
+              <motion.div
+                key={skill.title}
+                className="p-6 rounded-lg bg-rosepine-surface border border-rosepine-overlay hover:border-rosepine-pine transition-colors"
+                variants={cardVariants}
+                whileHover="hover"
+              >
+                <div className="text-2xl mb-4">{skill.icon}</div>
+                <h3 className="text-xl font-semibold text-rosepine-text mb-3">
+                  {skill.title}
+                </h3>
+                <p className="text-rosepine-text/60 mb-4">
+                  {skill.description}
+                </p>
+                <ul className="space-y-2">
+                  {skill.details.map((detail, index) => (
+                    <motion.li
+                      key={index}
+                      className="flex items-center text-rosepine-text/80"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * index }}
+                    >
+                      <span className="text-rosepine-pine mr-2">•</span>
+                      {detail}
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );
