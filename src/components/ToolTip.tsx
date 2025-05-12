@@ -11,7 +11,7 @@ export const ToolTip = (props: { toolTipText: string }) => {
       <Tooltip>
         <TooltipTrigger>Hover</TooltipTrigger>
         <TooltipContent>
-          <p>Add to library</p>
+          <p>{props.toolTipText}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
