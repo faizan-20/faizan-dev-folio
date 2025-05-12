@@ -8,6 +8,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import HomeLayout from "./layouts/HomeLayout.tsx";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,5 +21,7 @@ const router = createBrowserRouter(
 );
 
 createRoot(document.getElementById("root")!).render(
-  <RouterProvider router={router} />,
+  <ThemeProvider>
+    <RouterProvider router={router} />
+  </ThemeProvider>,
 );

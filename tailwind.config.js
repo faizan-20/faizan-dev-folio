@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       borderRadius: {
@@ -17,17 +20,18 @@ export default {
       colors: {
         // custom color theme for the website
         rosepine: {
-          base: "#191724", // Base background
-          surface: "#1f1d2e", // Surface background
-          overlay: "#26233a", // Overlay background
-          muted: "#6e6a86", // Muted text color
-          subtle: "#908caa", // Subtle text color
-          text: "#e0def4", // Primary text color
-          love: "#eb6f92", // Accent color (love/pink)
-          gold: "#f6c177", // Accent color (gold/yellow)
-          pine: "#31748f", // Accent color (pine/teal)
-          foam: "#9ccfd8", // Accent color (foam/cyan)
-          iris: "#c4a7e7", // Accent color (iris/purple)
+          base: "var(--rosepine-base)",
+          surface: "var(--rosepine-surface)",
+          overlay: "var(--rosepine-overlay)",
+          muted: "var(--rosepine-muted)",
+          subtle: "var(--rosepine-subtle)",
+          text: "var(--rosepine-text)",
+          love: "var(--rosepine-love)",
+          gold: "var(--rosepine-gold)",
+          rose: "var(--rosepine-rose)",
+          pine: "var(--rosepine-pine)",
+          foam: "var(--rosepine-foam)",
+          iris: "var(--rosepine-iris)",
           "highlight-low": "#21202e", // Low highlight
           "highlight-med": "#403d52", // Medium highlight
           "highlight-high": "#524f67", // High highlight

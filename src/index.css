@@ -4,8 +4,38 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
 @layer base {
   :root {
+    /* Rosepine theme (default) */
+    --rosepine-base: #191724;
+    --rosepine-surface: #1f1d2e;
+    --rosepine-overlay: #26233a;
+    --rosepine-muted: #6e6a86;
+    --rosepine-subtle: #908caa;
+    --rosepine-text: #e0def4;
+    --rosepine-love: #eb6f92;
+    --rosepine-gold: #f6c177;
+    --rosepine-rose: #ebbcba;
+    --rosepine-pine: #31748f;
+    --rosepine-foam: #9ccfd8;
+    --rosepine-iris: #c4a7e7;
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -64,6 +94,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-rosepine-base text-rosepine-text font-montserrat;
+    @apply bg-rosepine-base text-rosepine-text font-rubik;
   }
 }

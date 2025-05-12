@@ -2,11 +2,9 @@ import Home from "./pages/HomePage";
 
 function App() {
   return (
-    <>
-      <div className="">
-        <Home />
-      </div>
-    </>
+    <div className="min-h-screen bg-rosepine-base">
+      <Home />
+    </div>
   );
 }
 
